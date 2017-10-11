@@ -6,45 +6,36 @@ import java.util.*;
 
 import javax.imageio.*;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.pdfbox.pdmodel.*;
 
 public class ConverPDFToJpg {
 
     public static void main(String[] args) {
+        
+        File f=new File("C:/temp/roaming_notification/welcome-111.txt");
+        String s="19028154962,302270010018252,232 ,Austria                       ,2017-09-05 08:45:45                                     ";
+        
         try {
-            String sourceDir = "C:/temp/cibc-1.pdf"; 
-            String destinationDir = "C:/temp/"; 
+            FileWriter w=new FileWriter(f);
+            PrintWriter p=new PrintWriter(w);
+            p.println(s);
+            System.out.println("line1");
+            Thread.sleep(2*60*1000);
+            p.println(s);
+            p.close();
+            w.close();
+            
+            System.out.println("line2");
 
-            File sourceFile = new File(sourceDir);
-            File destinationFile = new File(destinationDir);
-            if (!destinationFile.exists()) {
-                destinationFile.mkdir();
-                System.out.println("Folder Created -> " + destinationFile.getAbsolutePath());
-            }
-            if (sourceFile.exists()) {
-                System.out.println("Images copied to Folder: " + destinationFile.getName());
-                PDDocument document = PDDocument.load(sourceDir);
-                List<PDPage> list = document.getDocumentCatalog().getAllPages();
-                System.out.println("Total files to be converted -> " + list.size());
-
-                String fileName = sourceFile.getName().replace(".pdf", "");
-                int pageNumber = 1;
-                for (PDPage page : list) {
-                    BufferedImage image = page.convertToImage();
-                    File outputfile = new File(destinationDir + fileName + "_" + pageNumber + ".png");
-                    System.out.println("Image Created -> " + outputfile.getName());
-                    ImageIO.write(image, "png", outputfile);
-                    pageNumber++;
-                }
-                document.close();
-                System.out.println("Converted Images are saved at -> " + destinationFile.getAbsolutePath());
-            } else {
-                System.err.println(sourceFile.getName() + " File not exists");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
+        
+        
+        
     }
+    
 
 }
